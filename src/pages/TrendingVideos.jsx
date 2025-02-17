@@ -7,7 +7,7 @@ export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/api/v1/trending")  // Your Invidious API URL
+    fetch("http://127.0.0.1:3000/api/v1/trending")
       .then((response) => response.json())
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
@@ -30,14 +30,20 @@ export default function TrendingVideos() {
             <CardContent>
               <h2 className="text-lg font-bold">{video.title}</h2>
               <p className="text-sm text-gray-500">{video.author}</p>
-              <a href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer">
+              <a
+                href={`https://www.youtube.com/watch?v=${video.videoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button>Veure Video</Button>
               </a>
             </CardContent>
           </Card>
         ))
       ) : (
-        <p className="text-center col-span-3 text-gray-500">No s'han trobat vídeos...</p>
+        <p className="text-center col-span-3 text-gray-500">
+          No s'han trobat vídeos...
+        </p>
       )}
     </div>
   );
