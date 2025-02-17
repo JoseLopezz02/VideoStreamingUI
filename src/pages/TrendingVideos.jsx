@@ -7,7 +7,7 @@ export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/api/v1/trending")
+    fetch("http://127.0.0.1:3000/api/v1/trending")  // Your Invidious API URL
       .then((response) => response.json())
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
@@ -19,7 +19,11 @@ export default function TrendingVideos() {
         videos.map((video) => (
           <Card key={video.videoId}>
             <img
-              src={video.videoThumbnails[3].url}
+              src={
+                video.videoThumbnails?.[0]?.url.startsWith("/")
+                  ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}`
+                  : video.videoThumbnails?.[0]?.url || "fallback-image.png"
+              }
               alt={video.title}
               className="w-full h-48 object-cover rounded-t-lg"
             />
