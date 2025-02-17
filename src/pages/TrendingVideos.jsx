@@ -7,7 +7,7 @@ export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetch("https://vid.puffyan.us/api/v1/trending")
+    fetch("http://127.0.0.1:3000/api/v1/trending")
       .then((response) => response.json())
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));

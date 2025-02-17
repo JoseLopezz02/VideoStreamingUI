@@ -13,6 +13,9 @@ export default function Home() {
       <Link to="/trending" className="mt-4">
         <Button>Trendy Videos</Button>
       </Link>
+      <Link to="/popular" className="mt-4">
+        <Button>Popular Videos</Button>
+      </Link>
     </div>
   );
 }
