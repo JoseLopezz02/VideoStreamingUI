@@ -41,3 +41,26 @@
     background-color: #45a049;  
   }
   
+
+  .scroll-to-top-btn {
+    position: fixed;
+    bottom: 20px;  /* Ajusta la distancia desde el fondo de la pantalla */
+    right: 20px;   /* Ajusta la distancia desde el lado derecho de la pantalla */
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .scroll-to-top-btn:hover {
+    background-color: #45a049;  /* Color al pasar el ratón por encima */
+  }
+  
+  .scroll-to-top-btn:focus {
+    outline: none;  /* Quitar el borde de enfoque */
+  }
