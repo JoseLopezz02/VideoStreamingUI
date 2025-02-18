@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import CardContent from "../components/CardContent";
 import Button from "../components/Button";
@@ -6,9 +7,11 @@ import "../styles/trending.css";
 
 export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
+  const [fabOpen, setFabOpen] = useState(false); // Estado para mostrar/ocultar opciones
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/api/v1/trending")  // Your Invidious API URL
+    fetch("http://127.0.0.1:3000/api/v1/trending")  
       .then((response) => response.json())
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
@@ -47,13 +50,19 @@ export default function TrendingVideos() {
         )}
       </div>
 
-      {/* Botón para subir arriba */}
-      <button
-        className="scroll-to-top-btn"
-        onClick={scrollToTop}
-      >
-        ↑
-      </button>
+      {/* Floating Action Button con menú desplegable */}
+      <div className="fab-container">
+        {fabOpen && (
+          <div className="fab-options">
+            <button className="fab-button" onClick={scrollToTop}>⬆</button>
+            <button className="fab-button home-button" onClick={() => navigate("/")}>🏠</button>
+          </div>
+        )}
+        
+        <button className="fab-main" onClick={() => setFabOpen(!fabOpen)}>
+          ⋮
+        </button>
+      </div>
     </div>
   );
 }
