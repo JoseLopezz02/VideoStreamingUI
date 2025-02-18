@@ -7,12 +7,8 @@ import "../styles/trending.css";
 
 export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState(false);
-  const [fabOpen, setFabOpen] = useState(false); // Estado para mostrar/ocultar opciones
+  const [fabOpen, setFabOpen] = useState(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     fetch("http://127.0.0.1:3000/api/v1/trending")  
@@ -20,17 +16,6 @@ export default function TrendingVideos() {
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
   }, []);
-
-  const fetchComments = (videoId) => {
-    setSelectedVideo(videoId);
-    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setComments(data || []);
-        setShowComments(true);
-      })
-      .catch((error) => console.error("Error carregant comentaris:", error));
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -57,7 +42,6 @@ export default function TrendingVideos() {
                 <a href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer">
                   <Button className="card-button">Veure Video</Button>
                 </a>
-                <Button onClick={() => fetchComments(video.videoId)}>Mostrar Comentaris</Button>
               </CardContent>
             </Card>
           ))
@@ -70,13 +54,13 @@ export default function TrendingVideos() {
       <div className="fab-container">
         {fabOpen && (
           <div className="fab-options">
-            <button className="fab-button" onClick={scrollToTop}>⬆</button>
-            <button className="fab-button home-button" onClick={() => navigate("/")}>🏠</button>
+            <button className="fab-button" onClick={scrollToTop}><i class="fa-solid fa-arrow-up"></i></button>
+            <button className="fab-button home-button" onClick={() => navigate("/")}><i class="fa-solid fa-house"></i></button>
           </div>
         )}
         
         <button className="fab-main" onClick={() => setFabOpen(!fabOpen)}>
-          ⋮
+          <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>

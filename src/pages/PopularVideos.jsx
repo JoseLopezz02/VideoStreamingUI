@@ -5,9 +5,6 @@ import CardContent from "../components/CardContent";
 
 export default function PopularVideos() {
   const [popularVideos, setPopularVideos] = useState([]);
-  const [selectedVideo, setPopularVideo] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     fetch("http://127.0.0.1:3000/api/v1/popular")
@@ -15,16 +12,6 @@ export default function PopularVideos() {
       .then((data) => setPopularVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
   }, []);
-
-  const fetchComments = (videoId) => {
-    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setComments(data || []);
-        setShowComments(true);
-      })
-      .catch((error) => console.error("Error carregant comentaris:", error));
-  };
 
   return (
     <div>
@@ -58,21 +45,6 @@ export default function PopularVideos() {
           No s'han trobat vídeos...
         </p>
       )}
-
-      {showComments && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Comentaris</h2>
-            <ul>
-              {comments.map((comment, index) => (
-                <li key={index} className="comment">{comment.text}</li>
-              ))}
-            </ul>
-            <Button onClick={() => setShowComments(false)}>Tancar</Button>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
