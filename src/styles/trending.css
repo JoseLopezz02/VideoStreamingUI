@@ -18,6 +18,7 @@
   }
   
   .card-title {
+    color: white;
     font-size: 1.125rem;
     font-weight: bold;
     white-space: nowrap;  /* Evita que el texto se divida en varias líneas */
@@ -29,7 +30,7 @@
   
   .card-author {
     font-size: 0.875rem;  
-    color: #6b7280;  
+    color: white;  
   }
   
   .card-button {

@@ -1,21 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
+import "../styles/home.css"; 
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center mt-10">
+    <div className="home-container">
       <input
         type="text"
         placeholder="Search..."
-        className="w-3/4 p-3 border rounded-lg shadow-md text-lg"
+        className="search-input"
+        aria-label="Search videos"
       />
-      <Link to="/trending" className="mt-4">
-        <Button>Trendy Videos</Button>
-      </Link>
-      <Link to="/popular" className="mt-4">
-        <Button>Popular Videos</Button>
-      </Link>
+      <nav className="button-group">
+        <Link to="/trending" className="custom-button">
+          Trendy Videos
+        </Link>
+        <Link to="/popular" className="custom-button">
+          Popular Videos
+        </Link>
+        <Link to="/playlists" className="custom-button">
+          Playlist
+        </Link>
+      </nav>
     </div>
   );
 }
