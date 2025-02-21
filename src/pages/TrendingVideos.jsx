@@ -8,6 +8,9 @@ import "../styles/trending.css";
 export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
   const [fabOpen, setFabOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +19,24 @@ export default function TrendingVideos() {
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
   }, []);
+
+  const fetchComments = (videoId) => {
+    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Comentarios recibidos:", data);
+        setComments(data.comments || []);
+        setSelectedVideo(videoId);
+        setShowComments(true);
+      })
+      .catch((error) => console.error("Error carregant comentaris:", error));
+  };
+
+  const closeModal = () => {
+    setShowComments(false);
+    setSelectedVideo(null);
+    setComments([]);
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -46,6 +67,9 @@ export default function TrendingVideos() {
                 >
                   <Button className="card-button">Veure Video</Button>
                 </a>
+                <Button className="card-button" onClick={() => fetchComments(video.videoId)}>
+                  Veure Comentaris
+                </Button>
               </CardContent>
             </Card>
           ))
@@ -76,6 +100,44 @@ export default function TrendingVideos() {
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
+      
+      {showComments && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Comentaris ({comments.length})</h2>
+            
+            {/* Contenedor con scroll para los comentarios */}
+            <div className="comments-container">
+              {comments.length > 0 ? (
+                comments.map((comment, index) => (
+                  <div key={index} className="comment">
+                    <img
+                      src={comment.authorThumbnails?.[0]?.url || "default-avatar.png"}
+                      alt={comment.author}
+                      className="comment-avatar"
+                    />
+                    <div className="comment-body">
+                      <a 
+                        href={`https://www.youtube.com${comment.authorUrl}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="comment-author"
+                      >
+                        {comment.author}
+                      </a>
+                      <p className="comment-text">{comment.content || "Comentari sense text"}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No hi ha comentaris disponibles</p>
+              )}
+            </div>
+
+            <Button onClick={closeModal}>Tancar</Button>
+            </div>
+          </div>
+        )}
     </div>
   );
 }
