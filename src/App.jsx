@@ -5,7 +5,7 @@ import TrendingVideos from "./pages/TrendingVideos";
 import PopularVideos from "./pages/PopularVideos";
 import Playlist from "./pages/Playlist";
 import SearchResults from "./pages/SearchResults";
-
+import VideoDetails from "./pages/VideoDetails";
 export default function App() {
   return (
     <Router>
@@ -16,6 +16,7 @@ export default function App() {
           <Route path="/popular" element={<PopularVideos />} />
           <Route path="/playlists" element={<Playlist />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/video/:videoId" element={<VideoDetails />} />
         </Routes>
       </div>
     </Router>
