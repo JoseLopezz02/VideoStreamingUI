@@ -51,6 +51,10 @@ export default function TrendingVideos() {
   const firstCommentIndex = lastCommentIndex - commentsPerPage;
   const currentComments = comments.slice(firstCommentIndex, lastCommentIndex);
 
+const handleVideoClick = (videoId) => {
+  navigate(`/video/${videoId}`);
+}
+
   return (
     <div>
       <div className="card-container">
@@ -69,13 +73,9 @@ export default function TrendingVideos() {
               <CardContent className="card-content">
                 <h2 className="card-title">{video.title}</h2>
                 <p className="card-author">{video.author}</p>
-                <a
-                  href={`https://www.youtube.com/watch?v=${video.videoId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button className="card-button">Veure Video</Button>
-                </a>
+                <Button className="card-button" onClick={() => handleVideoClick(video.videoId)}>
+                  Veure Video
+                </Button>
                 <Button className="card-button" onClick={() => fetchComments(video.videoId)}>
                   Veure Comentaris
                 </Button>
