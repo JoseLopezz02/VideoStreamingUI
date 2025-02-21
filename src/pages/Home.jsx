@@ -1,16 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/home.css"; 
+import "../styles/home.css";
+import SearchBar from "./SearchBar";
 
 export default function Home() {
   return (
     <div className="home-container">
-      <input
-        type="text"
-        placeholder="Search..."
-        className="search-input"
-        aria-label="Search videos"
-      />
+      <SearchBar />
       <nav className="button-group">
         <Link to="/trending" className="custom-button">
           Trendy Videos

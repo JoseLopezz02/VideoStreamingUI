@@ -11,7 +11,7 @@ export default function TrendingVideos() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/api/v1/trending")  
+    fetch("http://127.0.0.1:3000/api/v1/trending")
       .then((response) => response.json())
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error carregant els vídeos:", error));
@@ -39,14 +39,20 @@ export default function TrendingVideos() {
               <CardContent className="card-content">
                 <h2 className="card-title">{video.title}</h2>
                 <p className="card-author">{video.author}</p>
-                <a href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={`https://www.youtube.com/watch?v=${video.videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button className="card-button">Veure Video</Button>
                 </a>
               </CardContent>
             </Card>
           ))
         ) : (
-          <p className="text-center col-span-3 text-gray-500">No s'han trobat vídeos...</p>
+          <p className="text-center col-span-3 text-gray-500">
+            No s'han trobat vídeos...
+          </p>
         )}
       </div>
 
@@ -54,11 +60,18 @@ export default function TrendingVideos() {
       <div className="fab-container">
         {fabOpen && (
           <div className="fab-options">
-            <button className="fab-button" onClick={scrollToTop}><i class="fa-solid fa-arrow-up"></i></button>
-            <button className="fab-button home-button" onClick={() => navigate("/")}><i class="fa-solid fa-house"></i></button>
+            <button className="fab-button" onClick={scrollToTop}>
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+            <button
+              className="fab-button home-button"
+              onClick={() => navigate("/")}
+            >
+              <i class="fa-solid fa-house"></i>
+            </button>
           </div>
         )}
-        
+
         <button className="fab-main" onClick={() => setFabOpen(!fabOpen)}>
           <i class="fa-solid fa-bars"></i>
         </button>
