@@ -12,6 +12,9 @@ export default function TrendingVideos() {
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const navigate = useNavigate();
+  const [streamingVideo, setStreamingVideo] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const commentsPerPage = 20;
 
   useEffect(() => {
     fetch("http://127.0.0.1:3000/api/v1/trending")
@@ -28,6 +31,7 @@ export default function TrendingVideos() {
         setComments(data.comments || []);
         setSelectedVideo(videoId);
         setShowComments(true);
+        setCurrentPage(1);
       })
       .catch((error) => console.error("Error carregant comentaris:", error));
   };
@@ -36,11 +40,16 @@ export default function TrendingVideos() {
     setShowComments(false);
     setSelectedVideo(null);
     setComments([]);
+    setCurrentPage(1);
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const lastCommentIndex = currentPage * commentsPerPage;
+  const firstCommentIndex = lastCommentIndex - commentsPerPage;
+  const currentComments = comments.slice(firstCommentIndex, lastCommentIndex);
 
   return (
     <div>
@@ -70,6 +79,11 @@ export default function TrendingVideos() {
                 <Button className="card-button" onClick={() => fetchComments(video.videoId)}>
                   Veure Comentaris
                 </Button>
+                {video.isLive && (
+                  <Button className="card-button live-button" onClick={() => setStreamingVideo(video.videoId)}>
+                    🔴 Veure en Directe
+                  </Button>
+                )}
               </CardContent>
             </Card>
           ))
@@ -100,6 +114,22 @@ export default function TrendingVideos() {
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
+
+      {streamingVideo && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>🔴 En Directe</h2>
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${streamingVideo}`}
+              playing
+              controls
+              width="100%"
+              height="500px"
+            />
+            <Button onClick={closeStream}>Tancar</Button>
+          </div>
+        </div>
+      )}
       
       {showComments && (
         <div className="modal">
@@ -108,8 +138,8 @@ export default function TrendingVideos() {
             
             {/* Contenedor con scroll para los comentarios */}
             <div className="comments-container">
-              {comments.length > 0 ? (
-                comments.map((comment, index) => (
+              {currentComments.length > 0 ? (
+                currentComments.map((comment, index) => (
                   <div key={index} className="comment">
                     <img
                       src={comment.authorThumbnails?.[0]?.url || "default-avatar.png"}
@@ -131,8 +161,28 @@ export default function TrendingVideos() {
                 ))
               ) : (
                 <p>No hi ha comentaris disponibles</p>
-              )}
+              )}  
             </div>
+
+            <div className="pagination">
+              <Button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                Anterior
+              </Button>
+              <span>
+                Pàgina {currentPage} de {Math.max(1, Math.ceil(comments.length / commentsPerPage))}
+              </span>
+              <Button
+                onClick={() =>
+                  setCurrentPage((prev) => (lastCommentIndex < comments.length ? prev + 1 : prev))
+                }
+                disabled={lastCommentIndex >= comments.length}>
+                Següent
+              </Button>
+            </div>
+
 
             <Button onClick={closeModal}>Tancar</Button>
             </div>
