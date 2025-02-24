@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import Card from "../components/Card";
 import CardContent from "../components/CardContent";
+import "../styles/searchResults.css"; // Add CSS for styling
 
 export default function SearchResults() {
   const [videos, setVideos] = useState([]);
@@ -11,31 +12,44 @@ export default function SearchResults() {
 
   useEffect(() => {
     if (searchQuery) {
-      fetch(
-        `http://127.0.0.1:3000/api/v1/search?q=${encodeURIComponent(searchQuery)}`
-      )
+      fetch(`http://127.0.0.1:3000/api/v1/search?q=${encodeURIComponent(searchQuery)}`)
         .then((response) => response.json())
-        .then((data) => setVideos(data || []))
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setVideos(data);
+          } else if (data && data.videos && Array.isArray(data.videos)) {
+            setVideos(data.videos);
+          } else {
+            setVideos([]);
+          }
+        })
         .catch((error) => console.error("Error fetching videos:", error));
     }
   }, [searchQuery]);
 
   return (
-    <div>
+    <div className="search-results-container">
       <h2>Search Results for: "{searchQuery}"</h2>
       {videos.length > 0 ? (
-        <ul>
+        <ul className="video-list">
           {videos.map((video) => (
-            <Card key={video.id}>
-              <CardContent>
-                <h3>{video.title}</h3>
-                <p>{video.description}</p>
-                <video width="320" height="240" controls>
-                  <source src={video.url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </CardContent>
-            </Card>
+            <li key={video.videoId} className="video-item">
+              <Link to={`/video/${video.videoId}`} className="video-link">
+                <Card>
+                  <CardContent className="video-card">
+                    <img
+                      src={video.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"}
+                      alt={video.title}
+                      className="video-thumbnail"
+                    />
+                    <div className="video-info">
+                      <h3 className="video-title">{video.title}</h3>
+                      <p className="video-author">{video.author}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </li>
           ))}
         </ul>
       ) : (

@@ -4,7 +4,6 @@ import Card from "../components/Card";
 import CardContent from "../components/CardContent";
 import Button from "../components/Button";
 import "../styles/trending.css";
-import StreamingVideo from "./StreamingVideo";
 import FloatingButton from "../components/FloatingButton";
 import ComentsVideo from "./ComentsVideo";
 

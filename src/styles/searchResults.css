@@ -1,0 +1,46 @@
+.search-results-container {
+    padding: 20px;
+  }
+  
+  .video-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .video-item {
+    margin-bottom: 15px;
+  }
+  
+  .video-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+  }
+  
+  .video-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .video-thumbnail {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .video-info {
+    flex: 1;
+  }
+  
+  .video-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .video-author {
+    font-size: 14px;
+    color: gray;
+  }
+  
