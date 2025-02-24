@@ -7,24 +7,19 @@ export default function SearchBar({ searchType }) {
 
   const handleSearch = (event) => {
     if (event.key === "Enter" && query.trim() !== "") {
-      if (searchType === "channel") {
-        navigate(`/channels/${encodeURIComponent(query)}`); // Search for a channel
-      } else {
-        navigate(`/search?q=${encodeURIComponent(query)}`); // Search for videos
-      }
+      navigate(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 
   return (
     <input
       type="text"
-      placeholder={searchType === "channel" ? "Search channels..." : "Search videos..."}
+      placeholder={"Search videos..."}
       className="search-input"
       value={query}
       onChange={(e) => setQuery(e.target.value)}
       onKeyDown={handleSearch}
-      aria-label={searchType === "channel" ? "Search channels" : "Search videos"}
+      aria-label={"Search videos"}
     />
   );
 }
-

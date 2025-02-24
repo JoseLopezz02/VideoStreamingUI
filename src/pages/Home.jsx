@@ -7,7 +7,6 @@ export default function Home() {
   return (
     <div className="home-container">
        <SearchBar searchType="video" /> 
-       <SearchBar searchType="channel" /> 
       <nav className="button-group">
         <Link to="/trending" className="custom-button">
           Trendy Videos
