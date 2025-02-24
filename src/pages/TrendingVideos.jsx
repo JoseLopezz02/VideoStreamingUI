@@ -10,7 +10,6 @@ import ComentsVideo from "./ComentsVideo";
 export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [fabOpen, setFabOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const navigate = useNavigate();
@@ -43,10 +42,6 @@ export default function TrendingVideos() {
     setSelectedVideo(null);
     setComments([]);
     setCurrentPage(1);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleVideoClick = (videoId) => {
@@ -92,11 +87,7 @@ export default function TrendingVideos() {
         )}
       </div>
 
-      <FloatingButton
-        fabOpen={fabOpen}
-        setFabOpen={setFabOpen}
-        scrollToTop={scrollToTop}
-      />
+      <FloatingButton />
       <ComentsVideo
         showComments={showComments}
         comments={comments}

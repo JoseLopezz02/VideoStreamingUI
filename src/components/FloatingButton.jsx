@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function FloatingButton({ fabOpen, setFabOpen, scrollToTop }) {
+export default function FloatingButton() {
   const navigate = useNavigate();
+  const [fabOpen, setFabOpen] = useState(false);
+
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="fab-container">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "../styles/videoDetails.css"; 
+import FloatingButton from "../components/FloatingButton";
 
 export default function VideoDetails() {
   const { videoId } = useParams();
@@ -71,9 +72,9 @@ export default function VideoDetails() {
         <p className="video-meta"><strong>Visualizaciones:</strong> {video.viewCount.toLocaleString()} vistas</p>
         <p className="video-meta"><strong>Likes:</strong> {video.likeCount.toLocaleString()}</p>
 
-        <button className="back-button" onClick={() => window.history.back()}>
+        <Button onClick={() => window.history.back()}>
           Volver
-        </button>
+        </Button>
       </div>
 
       {/* Sección de videos recomendados */}
@@ -100,6 +101,8 @@ export default function VideoDetails() {
           <p className="no-recommendations">No hay videos recomendados disponibles.</p>
         )}
       </div>
+   
+      <FloatingButton />
     </div>
   );
 }

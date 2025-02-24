@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import Card from "../components/Card";
 import CardContent from "../components/CardContent";
 import "../styles/searchResults.css"; // Add CSS for styling
+import FloatingButton from "../components/FloatingButton";
 
 export default function SearchResults() {
   const [videos, setVideos] = useState([]);
@@ -55,6 +56,8 @@ export default function SearchResults() {
       ) : (
         <p>No results found.</p>
       )}
+
+      <FloatingButton />
     </div>
   );
 }
