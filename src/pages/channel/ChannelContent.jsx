@@ -38,7 +38,6 @@ export default function ChannelContent() {
           <h1>{channelData.author || "Unknown Author"}</h1>
           <p>{channelData.description || "No description available"}</p>
           <p><strong>Subscribers:</strong> {channelData.subCount?.toLocaleString() || "N/A"}</p>
-          <p><strong>Total Views:</strong> {channelData.totalViews?.toLocaleString() || "N/A"}</p>
         </div>
       </div>
 
