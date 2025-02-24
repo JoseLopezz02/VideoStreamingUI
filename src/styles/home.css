@@ -1,58 +1,68 @@
+/* General Home Container Styling */
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 2.5rem;
-    gap: 1rem;
-  }
-  
-  .search-input {
-    width: 75%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 1.125rem;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .search-input:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-  }
-  
-  .button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-  
-  .custom-button {
-    display: inline-block;
-    width: 200px;
-    text-align: center;
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .custom-button:hover {
-    background: linear-gradient(135deg, #0056b3, #003f7f);
-    transform: scale(1.05);
-  }
-  
-  .custom-button:active {
-    background: linear-gradient(135deg, #003f7f, #002955);
-    transform: scale(0.98);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Search Bar Styling */
+.search-input {
+  width: 80%;
+  max-width: 600px;
+  padding: 12px 18px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease-in-out;
+  background-color: #f8f8f8;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  border-color: #ff4500;
+  box-shadow: 0 0 12px rgba(255, 69, 0, 0.5);
+  outline: none;
+}
+
+/* Button Group - Grid Style */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Custom Buttons - Modern Video Platform Look */
+.custom-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #ff4500, #ff5733);
+  border: none;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.custom-button:hover {
+  background: linear-gradient(135deg, #ff5733, #ff7800);
+  transform: translateY(-3px);
+}
+
+.custom-button:active {
+  background: linear-gradient(135deg, #d63a00, #b52b00);
+  transform: translateY(1px);
+}

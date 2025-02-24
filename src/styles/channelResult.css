@@ -1,0 +1,85 @@
+.channel-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1c1c1e;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.channel-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+}
+
+.channel-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff0000;
+}
+
+.channel-header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.channel-header p {
+    font-size: 1rem;
+    color: #aaaaaa;
+    margin: 5px 0;
+}
+
+.channel-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.channel-actions button {
+    background: #ff0000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.channel-actions button:hover {
+    background: #cc0000;
+}
+
+.related-channels {
+    margin-top: 20px;
+}
+
+.related-channels h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.related-channels ul {
+    list-style: none;
+    padding: 0;
+}
+
+.related-channels li {
+    margin: 5px 0;
+}
+
+.related-channels a {
+    color: #ff9900;
+    text-decoration: none;
+}
+
+.related-channels a:hover {
+    text-decoration: underline;
+}

@@ -6,7 +6,8 @@ import SearchBar from "./SearchBar";
 export default function Home() {
   return (
     <div className="home-container">
-      <SearchBar />
+       <SearchBar searchType="video" /> 
+       <SearchBar searchType="channel" /> 
       <nav className="button-group">
         <Link to="/trending" className="custom-button">
           Trendy Videos

@@ -4,11 +4,14 @@ import Card from "../components/Card";
 import CardContent from "../components/CardContent";
 import Button from "../components/Button";
 import "../styles/trending.css";
+import StreamingVideo from "./StreamingVideo";
+import FloatingButton from "../components/FloatingButton";
+import ComentsVideo from "./ComentsVideo";
 
 export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
-  const [fabOpen, setFabOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [fabOpen, setFabOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const navigate = useNavigate();
@@ -47,13 +50,9 @@ export default function TrendingVideos() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const lastCommentIndex = currentPage * commentsPerPage;
-  const firstCommentIndex = lastCommentIndex - commentsPerPage;
-  const currentComments = comments.slice(firstCommentIndex, lastCommentIndex);
-
-const handleVideoClick = (videoId) => {
-  navigate(`/video/${videoId}`);
-}
+  const handleVideoClick = (videoId) => {
+    navigate(`/video/${videoId}`);
+  }
 
   return (
     <div>
@@ -94,100 +93,20 @@ const handleVideoClick = (videoId) => {
         )}
       </div>
 
-      {/* Floating Action Button con menú desplegable */}
-      <div className="fab-container">
-        {fabOpen && (
-          <div className="fab-options">
-            <button className="fab-button" onClick={scrollToTop}>
-              <i class="fa-solid fa-arrow-up"></i>
-            </button>
-            <button
-              className="fab-button home-button"
-              onClick={() => navigate("/")}
-            >
-              <i class="fa-solid fa-house"></i>
-            </button>
-          </div>
-        )}
-
-        <button className="fab-main" onClick={() => setFabOpen(!fabOpen)}>
-          <i class="fa-solid fa-bars"></i>
-        </button>
-      </div>
-
-      {streamingVideo && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>🔴 En Directe</h2>
-            <ReactPlayer
-              url={`https://www.youtube.com/watch?v=${streamingVideo}`}
-              playing
-              controls
-              width="100%"
-              height="500px"
-            />
-            <Button onClick={closeStream}>Tancar</Button>
-          </div>
-        </div>
-      )}
-      
-      {showComments && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Comentaris ({comments.length})</h2>
-            
-            {/* Contenedor con scroll para los comentarios */}
-            <div className="comments-container">
-              {currentComments.length > 0 ? (
-                currentComments.map((comment, index) => (
-                  <div key={index} className="comment">
-                    <img
-                      src={comment.authorThumbnails?.[0]?.url || "default-avatar.png"}
-                      alt={comment.author}
-                      className="comment-avatar"
-                    />
-                    <div className="comment-body">
-                      <a 
-                        href={`https://www.youtube.com${comment.authorUrl}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="comment-author"
-                      >
-                        {comment.author}
-                      </a>
-                      <p className="comment-text">{comment.content || "Comentari sense text"}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p>No hi ha comentaris disponibles</p>
-              )}  
-            </div>
-
-            <div className="pagination">
-              <Button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                Anterior
-              </Button>
-              <span>
-                Pàgina {currentPage} de {Math.max(1, Math.ceil(comments.length / commentsPerPage))}
-              </span>
-              <Button
-                onClick={() =>
-                  setCurrentPage((prev) => (lastCommentIndex < comments.length ? prev + 1 : prev))
-                }
-                disabled={lastCommentIndex >= comments.length}>
-                Següent
-              </Button>
-            </div>
-
-
-            <Button onClick={closeModal}>Tancar</Button>
-            </div>
-          </div>
-        )}
+      <FloatingButton
+        fabOpen={fabOpen}
+        setFabOpen={setFabOpen}
+        scrollToTop={scrollToTop}
+      />
+      <StreamingVideo streamingVideo={streamingVideo} onClose={() => setStreamingVideo(null)} />
+      <ComentsVideo
+        showComments={showComments}
+        comments={comments}
+        currentPage={currentPage}
+        commentsPerPage={commentsPerPage}
+        setCurrentPage={setCurrentPage}
+        closeModal={closeModal}
+      />
     </div>
   );
 }
