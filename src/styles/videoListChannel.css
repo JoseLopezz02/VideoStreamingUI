@@ -1,0 +1,68 @@
+/* Styles for the video list container */
+.video-list-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Title of the video section */
+  .video-list-container h1 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid #ff0000;
+    padding-bottom: 10px;
+    text-align: center;
+    color: #ffffff;
+  }
+  
+  /* Grid list for video items */
+  .video-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 15px;
+    padding: 0;
+    margin: 20px 0;
+    list-style: none;
+  }
+  
+  /* Individual video card */
+  .video-item {
+    background: #292929;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Hover effect for video cards */
+  .video-item:hover {
+    background: #3a3a3a;
+    transform: scale(1.02);
+  }
+  
+  /* Play icon for each video */
+  .video-item::before {
+    content: "▶"; 
+    font-size: 1.2rem;
+    color: #ffcc00;
+    font-weight: bold;
+  }
+  
+  /* Video title link */
+  .video-item a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: bold;
+    flex: 1;
+  }
+  
+  /* Hover effect for links */
+  .video-item a:hover {
+    text-decoration: underline;
+  }
+  

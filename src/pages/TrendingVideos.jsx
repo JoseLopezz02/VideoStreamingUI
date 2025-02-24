@@ -98,7 +98,6 @@ export default function TrendingVideos() {
         setFabOpen={setFabOpen}
         scrollToTop={scrollToTop}
       />
-      <StreamingVideo streamingVideo={streamingVideo} onClose={() => setStreamingVideo(null)} />
       <ComentsVideo
         showComments={showComments}
         comments={comments}
