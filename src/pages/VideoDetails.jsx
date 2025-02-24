@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import "../styles/videoDetails.css"; // Asegúrate de agregar estilos para el banner
+import "../styles/videoDetails.css"; 
 
 export default function VideoDetails() {
   const { videoId } = useParams();
   const navigate = useNavigate();
   const [video, setVideo] = useState(null);
+  const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,79 +15,91 @@ export default function VideoDetails() {
     setLoading(true);
     setError(null);
 
+    // Cargar detalles del video
     fetch(`http://127.0.0.1:3000/api/v1/videos/${videoId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("No se pudo obtener los detalles del video");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Datos del video:", data); 
         setVideo(data);
       })
-      .catch((error) => {
-        console.error("Error cargando los detalles del video:", error);
-        setError("Hubo un problema al cargar el video.");
+      .catch(() => setError("Hubo un problema al cargar el video."))
+      .finally(() => setLoading(false));
+
+    // Cargar videos recomendados
+    fetch(`http://127.0.0.1:3000/api/v1/search?q=recomendados`)
+      .then((response) => response.json())
+      .then((data) => {
+        setRecommendedVideos(data.filter(item => item.type === "video"));
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch(() => console.error("Error cargando recomendaciones."));
   }, [videoId]);
 
-  if (loading) return <p>Cargando...</p>;
-  if (error) return <p>{error}</p>;
-  if (!video) return <p>No se encontraron detalles del video.</p>;
+  if (loading) return <p className="loading-message">Cargando...</p>;
+  if (error) return <p className="error-message">{error}</p>;
+  if (!video) return <p className="error-message">No se encontraron detalles del video.</p>;
 
   return (
-    <div className="video-details-container">
-      <div className="video-container">
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title={video.title}
-          frameBorder="0"
-          allowFullScreen
-        ></iframe>
-      </div>
-
-      {/* Banner del Autor */}
-      <div className="author-banner" onClick={() => navigate(`/channels/${video.authorId}`)}>
-        <img 
-          src={video.authorThumbnails?.[0]?.url || "default-avatar.png"} 
-          alt={video.author} 
-          className="author-avatar"
-        />
-        <div>
-          <h3>{video.author}</h3>
-          <p>{video.subCountText || "N/A"} suscriptores</p>
+    <div className="video-page-container">
+      {/* Contenedor del video principal */}
+      <div className="video-details-container">
+        <div className="video-container">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title={video.title}
+            frameBorder="0"
+            allowFullScreen
+          ></iframe>
         </div>
+
+        {/* Banner del Autor */}
+        <div className="author-banner" onClick={() => navigate(`/channels/${video.authorId}`)}>
+          <img 
+            src={video.authorThumbnails?.[0]?.url || "default-avatar.png"} 
+            alt={video.author} 
+            className="author-avatar"
+          />
+          <div>
+            <h3>{video.author}</h3>
+            <p>{video.subCountText || "N/A"} suscriptores</p>
+          </div>
+        </div>
+
+        {/* Información del video */}
+        <h2 className="video-title">{video.title}</h2>
+        <p className="video-description"><strong>Descripción:</strong> {video.description}</p>
+        <p className="video-meta"><strong>Fecha de publicación:</strong> {video.publishedText}</p>
+        <p className="video-meta"><strong>Duración:</strong> {video.lengthSeconds} segundos</p>
+        <p className="video-meta"><strong>Visualizaciones:</strong> {video.viewCount.toLocaleString()} vistas</p>
+        <p className="video-meta"><strong>Likes:</strong> {video.likeCount.toLocaleString()}</p>
+
+        <button className="back-button" onClick={() => window.history.back()}>
+          Volver
+        </button>
       </div>
 
-      <h2>{video.title}</h2>
-      <p><strong>Descripción:</strong> {video.description}</p>
-      <p><strong>Fecha de publicación:</strong> {video.publishedText}</p>
-      <p><strong>Duración:</strong> {video.lengthSeconds} segundos</p>
-      <p><strong>Visualizaciones:</strong> {video.viewCount.toLocaleString()} vistas</p>
-      <p><strong>Likes:</strong> {video.likeCount.toLocaleString()}</p>
-
-      {video.captions && video.captions.length > 0 ? (
-        <div>
-          <h3>Subtítulos disponibles:</h3>
-          <ul>
-            {video.captions.map((caption, index) => (
-              <li key={index}>
-                <a href={caption.url} target="_blank" rel="noopener noreferrer">
-                  {caption.label} ({caption.language_code})
-                </a>
+      {/* Sección de videos recomendados */}
+      <div className="recommended-videos-container">
+        <h3 className="recommended-title">Videos recomendados</h3>
+        {recommendedVideos.length > 0 ? (
+          <ul className="recommended-videos-list">
+            {recommendedVideos.map((vid) => (
+              <li key={vid.videoId} className="recommended-video" onClick={() => navigate(`/video/${vid.videoId}`)}>
+                <img 
+                  src={vid.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"} 
+                  alt={vid.title} 
+                  className="thumbnail" 
+                />
+                <div className="video-info">
+                  <p className="title">{vid.title}</p>
+                  <p className="author">{vid.author}</p>
+                  <p className="views">{vid.viewCount.toLocaleString()} vistas</p>
+                </div>
               </li>
             ))}
           </ul>
-        </div>
-      ) : (
-        <p>No hay subtítulos disponibles.</p>
-      )}
-
-      <Button onClick={() => window.history.back()}>Volver</Button>
+        ) : (
+          <p className="no-recommendations">No hay videos recomendados disponibles.</p>
+        )}
+      </div>
     </div>
   );
 }
