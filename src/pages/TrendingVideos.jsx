@@ -10,9 +10,11 @@ import ComentsVideo from "./ComentsVideo";
 export default function TrendingVideos() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [fabOpen, setFabOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const navigate = useNavigate();
+  const [continued, setContinued] = useState(null);
   const [streamingVideo, setStreamingVideo] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const commentsPerPage = 20;
@@ -24,15 +26,20 @@ export default function TrendingVideos() {
       .catch((error) => console.error("Error carregant els vídeos:", error));
   }, []);
 
-  const fetchComments = (videoId) => {
-    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}`)
+  const fetchComments = (videoId, continuedToken = "") => {
+    let url = `http://127.0.0.1:3000/api/v1/comments/${videoId}`;
+    if (continuedToken) {
+      url += `?continued=${continuedToken}`;
+    }
+
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
         console.log("Comentarios recibidos:", data);
-        setComments(data.comments || []);
+        setComments((prevComments) => [...prevComments, ...(data.comments || [])]);
+        setContinued(data.continuation || null);
         setSelectedVideo(videoId);
         setShowComments(true);
-        setCurrentPage(1);
       })
       .catch((error) => console.error("Error carregant comentaris:", error));
   };
@@ -42,6 +49,10 @@ export default function TrendingVideos() {
     setSelectedVideo(null);
     setComments([]);
     setCurrentPage(1);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleVideoClick = (videoId) => {
@@ -87,14 +98,18 @@ export default function TrendingVideos() {
         )}
       </div>
 
-      <FloatingButton />
+      <FloatingButton
+        fabOpen={fabOpen}
+        setFabOpen={setFabOpen}
+        scrollToTop={scrollToTop}
+      />
       <ComentsVideo
         showComments={showComments}
         comments={comments}
-        currentPage={currentPage}
-        commentsPerPage={commentsPerPage}
-        setCurrentPage={setCurrentPage}
         closeModal={closeModal}
+        fetchComments={fetchComments}
+        selectedVideo={selectedVideo}
+        continued={continued}
       />
     </div>
   );

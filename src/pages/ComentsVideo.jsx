@@ -1,19 +1,16 @@
 import React from "react";
 import Button from "../components/Button";
+import "../styles/trending.css";
 
-export default function CommentsModal({
+export default function ComentsVideo({
   showComments,
   comments,
-  currentPage,
-  commentsPerPage,
-  setCurrentPage,
   closeModal,
+  fetchComments,
+  selectedVideo,
+  continued
 }) {
   if (!showComments) return null; // Don't render if comments are not shown
-
-  const lastCommentIndex = currentPage * commentsPerPage;
-  const firstCommentIndex = lastCommentIndex - commentsPerPage;
-  const currentComments = comments.slice(firstCommentIndex, lastCommentIndex);
 
   return (
     <div className="modal">
@@ -22,8 +19,8 @@ export default function CommentsModal({
 
         {/* Contenedor con scroll para los comentarios */}
         <div className="comments-container">
-          {currentComments.length > 0 ? (
-            currentComments.map((comment, index) => (
+          {comments.length > 0 ? (
+            comments.map((comment, index) => (
               <div key={index} className="comment">
                 <img
                   src={comment.authorThumbnails?.[0]?.url || "default-avatar.png"}
@@ -48,26 +45,14 @@ export default function CommentsModal({
           )}
         </div>
 
-        {/* Pagination Controls */}
-        <div className="pagination">
-          <Button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </Button>
-          <span>
-            Pàgina {currentPage} de {Math.max(1, Math.ceil(comments.length / commentsPerPage))}
-          </span>
-          <Button
-            onClick={() =>
-              setCurrentPage((prev) => (lastCommentIndex < comments.length ? prev + 1 : prev))
-            }
-            disabled={lastCommentIndex >= comments.length}
-          >
-            Següent
-          </Button>
-        </div>
+        {/* Botón para cargar más comentarios */}
+        {continued && (
+          <div className="load-more">
+            <Button onClick={() => fetchComments(selectedVideo, continued)}>
+              Carregar més
+            </Button>
+          </div>
+        )}
 
         <Button onClick={closeModal}>Tancar</Button>
       </div>
