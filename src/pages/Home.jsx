@@ -51,7 +51,6 @@ export default function Home() {
   return (
     <div className="home-container">
       <SearchBar searchType="video" />
-      <SearchBar searchType="channel" />
 
       {/* Sección de Trending Videos directamente en Home */}
       <h2 className="trending-title">Trending Videos</h2>
