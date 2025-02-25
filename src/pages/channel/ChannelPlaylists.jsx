@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import "../../styles/channelPlaylists.css";
+import VideoDetails from "../VideoDetails";
 
 export default function ChannelPlaylists() {
   const { channelId } = useParams();
@@ -28,21 +30,26 @@ export default function ChannelPlaylists() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error carregant les playlists:", error);
+        console.error("Error cargando las playlists:", error);
         setPlaylists([]);
         setLoading(false);
       });
   }, [channelId]);
 
-  if (loading) return <p>Loading playlists...</p>;
-  if (!Array.isArray(playlists) || playlists.length === 0) return <p>No playlists found.</p>;
+  if (loading) return <p>Cargando playlists...</p>;
+  if (!Array.isArray(playlists) || playlists.length === 0) return <p>No se encontraron playlists.</p>;
 
   return (
-    <div>
-      <h1>Playlists of the Channel</h1>
-      <ul>
+    <div className="playlist-list-container">
+      <h1>Playlists del Canal</h1>
+      <ul className="playlist-list">
         {playlists.map((playlist) => (
-          <li key={playlist.id || playlist.playlistId}>{playlist.title}</li>
+          <li key={playlist.id || playlist.playlistId} className="playlist-item">
+            <Link to={`/playlist/${playlist.playlistId}`} className="playlist-link">
+              <img src={playlist.thumbnailUrl || "fallback-image.png"} alt={playlist.title} className="playlist-thumbnail" />
+              <span>{playlist.title}</span>
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
