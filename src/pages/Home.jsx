@@ -50,19 +50,18 @@ export default function Home() {
 
   return (
     <div className="home-container">
+      <h2 className="trending-title">TRENDING VIDEOS</h2>
       <SearchBar searchType="video" />
 
       {/* Sección de Trending Videos directamente en Home */}
-      <h2 className="trending-title">Trending Videos</h2>
       <div className="card-container">
         {videos.length > 0 ? (
           videos.map((video) => (
             <Card key={video.videoId}>
               <img
-                src={
-                  video.videoThumbnails?.[0]?.url.startsWith("/")
-                    ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}`
-                    : video.videoThumbnails?.[0]?.url || "fallback-image.png"
+                src={video.videoThumbnails?.[0]?.url.startsWith("/")
+                  ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}`
+                  : video.videoThumbnails?.[0]?.url || "fallback-image.png"
                 }
                 alt={video.title}
                 className="card-img"
@@ -70,17 +69,19 @@ export default function Home() {
               <CardContent className="card-content">
                 <h2 className="card-title">{video.title}</h2>
                 <p className="card-author">{video.author}</p>
-                <Button className="card-button" onClick={() => handleVideoClick(video.videoId)}>
-                  Ver Video
-                </Button>
-                <Button className="card-button" onClick={() => fetchComments(video.videoId)}>
-                  Ver Comentarios
-                </Button>
-                {video.isLive && (
-                  <Button className="card-button live-button" onClick={() => setSelectedVideo(video.videoId)}>
-                    🔴 Ver en Directo
+                <div className="button-container">
+                  <Button className="card-button" onClick={() => handleVideoClick(video.videoId)}>
+                    Ver Video
                   </Button>
-                )}
+                  <Button className="card-button" onClick={() => fetchComments(video.videoId)}>
+                    Ver Comentarios
+                  </Button>
+                  {video.isLive && (
+                    <Button className="card-button live-button" onClick={() => setSelectedVideo(video.videoId)}>
+                      🔴 Ver en Directo
+                    </Button>
+                  )}
+                </div>
               </CardContent>
             </Card>
           ))

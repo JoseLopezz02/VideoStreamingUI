@@ -25,8 +25,8 @@
 }
 
 .search-input:focus {
-  border-color: #ff4500;
-  box-shadow: 0 0 12px rgba(255, 69, 0, 0.5);
+  border-color: #ff0026;
+  box-shadow: 0 0 12px #7c0416;
   outline: none;
 }
 
@@ -40,35 +40,12 @@
   max-width: 600px;
 }
 
-/* Custom Buttons - Modern Video Platform Look */
-.custom-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 14px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(135deg, #ff4500, #ff5733);
-  border: none;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: transform 0.3s ease, background 0.3s ease;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.custom-button:hover {
-  background: linear-gradient(135deg, #ff5733, #ff7800);
-  transform: translateY(-3px);
-}
-
-.custom-button:active {
-  background: linear-gradient(135deg, #d63a00, #b52b00);
-  transform: translateY(1px);
-}
-
 
 /* trending.css */
+.trending-title {
+  font-size: 30px;
+}
+
 .card-img {
   width: 100%;
   height: 200px;  
@@ -84,6 +61,10 @@
 }
 
 .card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espaciado entre los elementos */
+  align-items: center;
   padding: 1rem;
 }
 
@@ -104,16 +85,20 @@
 }
 
 .card-button {
-  background-color: #26f5d2;  
-  padding: 0.5rem 1rem;
+  background-color: #ff0026;
+  padding: 0.75rem 1.5rem; 
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
   text-decoration: none;
+  width: 200px; 
+  margin: 0.5rem 0; 
+  font-size: 1rem;
+  
 }
 
 .card-button:hover {
-  background-color: #45a049;  
+  background-color: #7c0416;  
 }
 
 
@@ -121,7 +106,6 @@
   position: fixed;
   bottom: 20px;  
   right: 20px;
-  background-color: #4CAF50; 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -132,12 +116,9 @@
   transition: background-color 0.3s ease;
 }
 
-.scroll-to-top-btn:hover {
-  background-color: #45a049;  /* Color al pasar el ratón por encima */
-}
 
 .scroll-to-top-btn:focus {
-  outline: none;  /* Quitar el borde de enfoque */
+  outline: none; 
 }
 
 /* Contenedor del FAB */
@@ -162,7 +143,7 @@ margin-bottom: 10px;
 .fab-button, .fab-main {
 width: 40px;
 height: 40px;
-background-color: #27b7e2;
+background-color: #ff0026;
 color: white;
 border: none;
 border-radius: 50%;
@@ -178,23 +159,23 @@ transition: background-color 0.3s ease, transform 0.2s ease;
 
 /* Botón principal (con los tres puntos) */
 .fab-main {
-background-color: #27b7e2;
+background-color: #ff0026;
 font-size: 20px;
 }
 
 .fab-main:hover {
-background-color: #27b7e2;
+background-color: #7c0416;
 transform: scale(1.1);
 }
 
 .home-button:hover {
-background-color: #388E3C;
+background-color: #7c0416;
 }
 
 /* Efecto hover para todos los botones */
 .fab-button:hover {
-background-color: #e64a19;
 transform: scale(1.1);
+background-color: #7c0416;
 }
 
 /* Estilos del modal de comentarios */

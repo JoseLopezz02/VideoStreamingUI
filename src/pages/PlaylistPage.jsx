@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import FloatingButton from "../components/FloatingButton";
 import "../styles/playlistPage.css";
 
 export default function PlaylistPage() {
@@ -55,14 +56,14 @@ export default function PlaylistPage() {
               className={`playlist-video-item ${video.videoId === selectedVideo.videoId ? "active" : ""}`}
               onClick={() => handleVideoSelect(video)}
             >
-              <img 
-  src={
-    video.videoThumbnails?.[0]?.url.startsWith("/") 
-      ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}` 
-      : video.videoThumbnails?.[0]?.url || "fallback-image.png"
-  } 
-  alt={video.title} 
-/>
+              <img
+                src={
+                  video.videoThumbnails?.[0]?.url.startsWith("/")
+                    ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}`
+                    : video.videoThumbnails?.[0]?.url || "fallback-image.png"
+                }
+                alt={video.title}
+              />
               <div className="playlist-video-info">
                 <p>{video.title}</p>
                 <span>{video.author}</span>
@@ -71,6 +72,7 @@ export default function PlaylistPage() {
           ))}
         </ul>
       </div>
+      <FloatingButton />
     </div>
   );
 }
