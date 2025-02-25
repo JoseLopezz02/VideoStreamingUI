@@ -26,7 +26,7 @@
   
   .playlist-sidebar {
     flex: 1;
-    background: #f9f9f9;
+    background: #202020;
     padding: 15px;
     border-radius: 8px;
     max-height: 500px;
@@ -43,7 +43,6 @@
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    transition: background 0.3s;
   }
   
   .playlist-video-item:hover,
@@ -56,6 +55,7 @@
     height: 50px;
     object-fit: cover;
     border-radius: 5px;
+    border: 1px solid white;
   }
   
   .playlist-video-info {

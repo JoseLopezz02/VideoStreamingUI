@@ -39,10 +39,15 @@ export default function SearchResults() {
                 <Card>
                   <CardContent className="video-card">
                     <img
-                      src={video.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"}
+                      src={
+                        video.videoThumbnails?.[0]?.url.startsWith("/")
+                          ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}`
+                          : video.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"
+                      }
                       alt={video.title}
                       className="video-thumbnail"
                     />
+
                     <div className="video-info">
                       <h3 className="video-title">{video.title}</h3>
                       <p className="video-author">{video.author}</p>

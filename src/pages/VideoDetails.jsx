@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import "../styles/videoDetails.css"; 
+import "../styles/videoDetails.css";
 import FloatingButton from "../components/FloatingButton";
 
 export default function VideoDetails() {
@@ -53,9 +53,9 @@ export default function VideoDetails() {
 
         {/* Banner del Autor */}
         <div className="author-banner" onClick={() => navigate(`/channels/${video.authorId}`)}>
-          <img 
-            src={video.authorThumbnails?.[0]?.url || "default-avatar.png"} 
-            alt={video.author} 
+          <img
+            src={video.authorThumbnails?.[0]?.url || "default-avatar.png"}
+            alt={video.author}
             className="author-avatar"
           />
           <div>
@@ -84,10 +84,14 @@ export default function VideoDetails() {
           <ul className="recommended-videos-list">
             {recommendedVideos.map((vid) => (
               <li key={vid.videoId} className="recommended-video" onClick={() => navigate(`/video/${vid.videoId}`)}>
-                <img 
-                  src={vid.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"} 
-                  alt={vid.title} 
-                  className="thumbnail" 
+                <img
+                  src={
+                    vid.videoThumbnails?.[0]?.url?.startsWith("/")
+                      ? `http://127.0.0.1:3000${vid.videoThumbnails[0].url}`
+                      : vid.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"
+                  }
+                  alt={vid.title}
+                  className="thumbnail"
                 />
                 <div className="video-info">
                   <p className="title">{vid.title}</p>
@@ -101,7 +105,7 @@ export default function VideoDetails() {
           <p className="no-recommendations">No hay videos recomendados disponibles.</p>
         )}
       </div>
-   
+
       <FloatingButton />
     </div>
   );
