@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import Card from "../components/Card";
 import CardContent from "../components/CardContent";
-import "../styles/searchResults.css"; // Add CSS for styling
+import "../styles/searchResults.css";
 import FloatingButton from "../components/FloatingButton";
 
 export default function SearchResults() {

@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import TrendingVideos from "./pages/TrendingVideos";
 import SearchResults from "./pages/SearchResults";
 import VideoDetails from "./pages/VideoDetails";
 import ChannelContent from "./pages/channel/ChannelContent";
@@ -16,7 +15,6 @@ export default function App() {
       <div className="p-6">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/trending" element={<TrendingVideos />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/video/:videoId" element={<VideoDetails />} />
           <Route path="/channels/:channelId" element={<ChannelContent />} />

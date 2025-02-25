@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../../styles/channelPlaylists.css";
-import VideoDetails from "../VideoDetails";
 
 export default function ChannelPlaylists() {
   const { channelId } = useParams();
