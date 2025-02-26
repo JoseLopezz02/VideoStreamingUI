@@ -14,13 +14,7 @@ export default function ChannelVideos() {
             .then((response) => response.json())
             .then((data) => {
                 console.log("API Response:", data);
-                if (Array.isArray(data)) {
-                    setVideos(data);
-                } else if (data && data.videos && Array.isArray(data.videos)) {
-                    setVideos(data.videos);
-                } else {
-                    setVideos([]);
-                }
+                setVideos(Array.isArray(data) ? data : data.videos || []);
                 setLoading(false);
             })
             .catch((error) => {
@@ -30,7 +24,7 @@ export default function ChannelVideos() {
     }, [channelId]);
 
     if (loading) return <p>Loading videos...</p>;
-    if (!Array.isArray(videos) || videos.length === 0) return <p>No videos found.</p>;
+    if (!videos.length) return <p>No videos found.</p>;
 
     return (
         <Card className="video-list-container">
