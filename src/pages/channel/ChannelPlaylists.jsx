@@ -45,7 +45,16 @@ export default function ChannelPlaylists() {
         {playlists.map((playlist) => (
           <li key={playlist.id || playlist.playlistId} className="playlist-item">
             <Link to={`/playlist/${playlist.playlistId}`} className="playlist-link">
-              <img src={playlist.thumbnailUrl || "fallback-image.png"} alt={playlist.title} className="playlist-thumbnail" />
+              <img
+                src={
+                  playlist.thumbnailUrl && playlist.thumbnailUrl.startsWith("/")
+                    ? `http://127.0.0.1:3000${playlist.thumbnailUrl}`  // Corrige rutas relativas
+                    : playlist.thumbnailUrl || "fallback-image.png"   // Usa una imagen alternativa si falta la URL
+                }
+                alt={playlist.title || "Imagen no disponible"}
+                className="playlist-thumbnail"
+                onError={(e) => (e.target.src = "fallback-image.png")} // Si hay error al cargar, usa una imagen de respaldo
+              />
               <span>{playlist.title}</span>
             </Link>
           </li>

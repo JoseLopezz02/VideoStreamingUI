@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import "../../styles/channelResult.css";
 import { useNavigate } from "react-router-dom";
+import FloatingButton from "../../components/FloatingButton";
 
 export default function ChannelContent() {
   const { channelId } = useParams();
@@ -61,6 +62,7 @@ export default function ChannelContent() {
           </ul>
         </div>
       )}
+      <FloatingButton />
     </div>
   );
 }

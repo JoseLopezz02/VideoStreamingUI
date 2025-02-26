@@ -10,7 +10,7 @@ export default function ComentsVideo({
   selectedVideo,
   continued
 }) {
-  if (!showComments) return null; // Don't render if comments are not shown
+  if (!showComments) return null; 
 
   return (
     <div className="modal">
