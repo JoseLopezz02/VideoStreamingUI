@@ -1,68 +1,83 @@
-/* Styles for the video list container */
+/* General page styling */
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Video list container */
 .video-list-container {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #1e1e1e;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  }
-  
-  /* Title of the video section */
-  .video-list-container h1 {
-    font-size: 1.8rem;
-    border-bottom: 2px solid #ff0000;
-    padding-bottom: 10px;
-    text-align: center;
-    color: #ffffff;
-  }
-  
-  /* Grid list for video items */
-  .video-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 15px;
-    padding: 0;
-    margin: 20px 0;
-    list-style: none;
-  }
-  
-  /* Individual video card */
-  .video-item {
-    background: #292929;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    transition: background 0.3s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  /* Hover effect for video cards */
-  .video-item:hover {
-    background: #3a3a3a;
-    transform: scale(1.02);
-  }
-  
-  /* Play icon for each video */
-  .video-item::before {
-    content: "▶"; 
-    font-size: 1.2rem;
-    color: #ffcc00;
-    font-weight: bold;
-  }
-  
-  /* Video title link */
-  .video-item a {
-    color: #ffcc00;
-    text-decoration: none;
-    font-weight: bold;
-    flex: 1;
-  }
-  
-  /* Hover effect for links */
-  .video-item a:hover {
-    text-decoration: underline;
-  }
-  
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 25px;
+  background: linear-gradient(145deg, #1c1c1c, #242424);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Section title */
+.video-list-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  border-bottom: 3px solid #ff0000;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* Video grid */
+.video-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Video item */
+.video-item {
+  background: #181818;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover effect */
+.video-item:hover {
+  background: #242424;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+/* Animated play icon */
+.video-item::before {
+  content: "▶";
+  font-size: 1.5rem;
+  color: #ffcc00;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Link styles */
+.video-link {
+  color: #ffcc00;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  flex: 1;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Hover effect on links */
+.video-link:hover {
+  color: #ffeb99;
+  text-decoration: underline;
+}
