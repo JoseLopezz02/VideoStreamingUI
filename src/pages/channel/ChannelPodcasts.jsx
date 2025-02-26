@@ -15,11 +15,10 @@ export default function ChannelPodcasts() {
         return response.json();
       })
       .then((data) => {
-        console.log("API Response:", data); // Debugging: Check API response structure
+        console.log("API Response:", data); 
 
         if (data && Array.isArray(data.playlists)) {
-          setPodcasts(data.playlists); // Use playlists as podcasts
-        } else {
+          setPodcasts(data.playlists);
           setPodcasts([]);
         }
         setLoading(false);

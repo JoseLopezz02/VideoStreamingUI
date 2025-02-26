@@ -63,7 +63,7 @@
 .card-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Espaciado entre los elementos */
+  justify-content: space-between;
   align-items: center;
   padding: 1rem;
 }
@@ -72,11 +72,11 @@
   color: white;
   font-size: 1.125rem;
   font-weight: bold;
-  white-space: nowrap;  /* Evita que el texto se divida en varias líneas */
-  overflow: hidden;  /* Oculta el texto que excede el tamaño del contenedor */
-  text-overflow: ellipsis;  /* Agrega "..." al final del texto si es muy largo */
-  max-width: 100%;  /* Asegura que el título no crezca más allá del contenedor */
-  display: block; /* Para que la regla de ellipsis funcione correctamente */
+  white-space: nowrap; 
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+  max-width: 100%;
+  display: block;
 }
 
 .card-author {
