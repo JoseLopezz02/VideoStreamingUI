@@ -88,7 +88,7 @@ export default function Home() {
             </Card>
           ))
         ) : (
-          <p className="text-center col-span-3 text-gray-500">No se han encontrado videos...</p>
+          <p className="text-center col-span-3 text-gray-500">Buscando videos...</p>
         )}
       </div>
 

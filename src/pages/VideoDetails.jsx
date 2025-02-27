@@ -16,22 +16,15 @@ export default function VideoDetails() {
     setLoading(true);
     setError(null);
 
-    // Cargar detalles del video
+    // Cargar detalles del video y videos recomendados
     fetch(`http://127.0.0.1:3000/api/v1/videos/${videoId}`)
       .then((response) => response.json())
       .then((data) => {
         setVideo(data);
+        setRecommendedVideos(data.recommendedVideos || []);
       })
       .catch(() => setError("Hubo un problema al cargar el video."))
       .finally(() => setLoading(false));
-
-    // Cargar videos recomendados
-    fetch(`http://127.0.0.1:3000/api/v1/search?q=recomendados`)
-      .then((response) => response.json())
-      .then((data) => {
-        setRecommendedVideos(data.filter(item => item.type === "video"));
-      })
-      .catch(() => console.error("Error cargando recomendaciones."));
   }, [videoId]);
 
   if (loading) return <p className="loading-message">Cargando...</p>;
