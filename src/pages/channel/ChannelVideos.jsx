@@ -33,12 +33,20 @@ export default function ChannelVideos() {
                 <ul className="video-list">
                     {videos.map((video) => (
                         <li key={video.videoId} className="video-item">
-                            <Link 
-                                to={`/video/${video.videoId}`} 
-                                className="video-link"
-                            >
-                                🎬 {video.title}
-                            </Link>
+                            <img
+                                src={
+                                    video.videoThumbnails?.[0]?.url?.startsWith("/")
+                                        ? `http://127.0.0.1:3000${video.videoThumbnails[0].url}`
+                                        : video.videoThumbnails?.[0]?.url || "default-thumbnail.jpg"
+                                }
+                                alt={video.title}
+                                className="video-thumbnail"
+                            />
+                            <div className="video-info">
+                                <Link to={`/video/${video.videoId}`} className="video-title">
+                                    🎬 {video.title}
+                                </Link>
+                            </div>
                         </li>
                     ))}
                 </ul>

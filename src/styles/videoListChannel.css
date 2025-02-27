@@ -1,10 +1,3 @@
-/* General page styling */
-body {
-  background-color: #121212;
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-}
-
 /* Video list container */
 .video-list-container {
   max-width: 1100px;
@@ -14,17 +7,6 @@ body {
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   text-align: center;
-}
-
-/* Section title */
-.video-list-container h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  border-bottom: 3px solid #ff0000;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  color: #ffffff;
-  text-transform: uppercase;
 }
 
 /* Video grid */
@@ -40,12 +22,12 @@ body {
 .video-item {
   background: #181818;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease-in-out;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 18px;  /* ✅ Improved spacing between thumbnail and text */
   position: relative;
   overflow: hidden;
 }
@@ -57,7 +39,7 @@ body {
   box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
 }
 
-/* Animated play icon */
+/* Play icon */
 .video-item::before {
   content: "▶";
   font-size: 1.5rem;
@@ -66,18 +48,46 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-/* Link styles */
-.video-link {
-  color: #ffcc00;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  flex: 1;
-  transition: color 0.3s ease-in-out;
+/* Thumbnail styling */
+.video-thumbnail {
+  width: 150px; /* ✅ Increased width for better visibility */
+  height: 90px; /* ✅ Increased height */
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Hover effect on links */
-.video-link:hover {
+/* Hover effect for thumbnail */
+.video-item:hover .video-thumbnail {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Video title */
+.video-title {
+  color: #ffcc00;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: color 0.3s ease-in-out;
+  display: block;
+  max-width: 85%;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* Hover effect on video title */
+.video-title:hover {
   color: #ffeb99;
   text-decoration: underline;
+}
+
+/* Improved spacing for text */
+.video-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  text-align: left;
+  flex: 1;
 }
