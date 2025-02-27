@@ -20,7 +20,7 @@ export default function ChannelPlaylists() {
         return JSON.parse(text);
       })
       .then((data) => {
-        console.log("API Response:", data); // Debugging: Check API response
+        console.log("API Response:", data);
         if (data && Array.isArray(data.playlists)) {
           setPlaylists(data.playlists);
         } else {

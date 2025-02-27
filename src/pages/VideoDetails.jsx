@@ -27,9 +27,9 @@ export default function VideoDetails() {
       .finally(() => setLoading(false));
   }, [videoId]);
 
-  if (loading) return <p className="loading-message">Cargando...</p>;
+  if (loading) return <p className="loading-message">Loading...</p>;
   if (error) return <p className="error-message">{error}</p>;
-  if (!video) return <p className="error-message">No se encontraron detalles del video.</p>;
+  if (!video) return <p className="error-message">No video details found.</p>;
 
   return (
     <div className="video-page-container">
@@ -53,16 +53,16 @@ export default function VideoDetails() {
           />
           <div>
             <h3>{video.author}</h3>
-            <p>{video.subCountText || "N/A"} suscriptores</p>
+            <p>{video.subCountText || "N/A"} subscribers</p>
           </div>
         </div>
 
         {/* Información del video */}
         <h2 className="video-title">{video.title}</h2>
-        <p className="video-description"><strong>Descripción:</strong> {video.description}</p>
-        <p className="video-meta"><strong>Fecha de publicación:</strong> {video.publishedText}</p>
-        <p className="video-meta"><strong>Duración:</strong> {video.lengthSeconds} segundos</p>
-        <p className="video-meta"><strong>Visualizaciones:</strong> {video.viewCount.toLocaleString()} vistas</p>
+        <p className="video-description"><strong>Description:</strong> {video.description}</p>
+        <p className="video-meta"><strong>Published:</strong> {video.publishedText}</p>
+        <p className="video-meta"><strong>Duration:</strong> {video.lengthSeconds} seconds</p>
+        <p className="video-meta"><strong>Views:</strong> {video.viewCount.toLocaleString()} vistas</p>
         <p className="video-meta"><strong>Likes:</strong> {video.likeCount.toLocaleString()}</p>
 
         <Button onClick={() => window.history.back()}>
@@ -72,7 +72,7 @@ export default function VideoDetails() {
 
       {/* Sección de videos recomendados */}
       <div className="recommended-videos-container">
-        <h3 className="recommended-title">Videos recomendados</h3>
+        <h3 className="recommended-title">Recommended Videos</h3>
         {recommendedVideos.length > 0 ? (
           <ul className="recommended-videos-list">
             {recommendedVideos.map((vid) => (
@@ -89,13 +89,13 @@ export default function VideoDetails() {
                 <div className="video-info">
                   <p className="title">{vid.title}</p>
                   <p className="author">{vid.author}</p>
-                  <p className="views">{vid.viewCount.toLocaleString()} vistas</p>
+                  <p className="views">{vid.viewCount.toLocaleString()} views</p>
                 </div>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="no-recommendations">No hay videos recomendados disponibles.</p>
+          <p className="no-recommendations">No recommended videos available.</p>
         )}
       </div>
 
