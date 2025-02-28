@@ -21,11 +21,7 @@ export default function ChannelPlaylists() {
       })
       .then((data) => {
         console.log("API Response:", data);
-        if (data && Array.isArray(data.playlists)) {
-          setPlaylists(data.playlists);
-        } else {
-          setPlaylists([]);
-        }
+        setPlaylists(data && Array.isArray(data.playlists) ? data.playlists : []);
         setLoading(false);
       })
       .catch((error) => {
@@ -36,7 +32,7 @@ export default function ChannelPlaylists() {
   }, [channelId]);
 
   if (loading) return <p>Cargando playlists...</p>;
-  if (!Array.isArray(playlists) || playlists.length === 0) return <p>No se encontraron playlists.</p>;
+  if (!playlists.length) return <p>No se encontraron playlists.</p>;
 
   return (
     <div className="playlist-list-container">
@@ -47,15 +43,15 @@ export default function ChannelPlaylists() {
             <Link to={`/playlist/${playlist.playlistId}`} className="playlist-link">
               <img
                 src={
-                  playlist.thumbnailUrl && playlist.thumbnailUrl.startsWith("/")
-                    ? `http://127.0.0.1:3000${playlist.thumbnailUrl}`  // Corrige rutas relativas
-                    : playlist.thumbnailUrl || "fallback-image.png"   // Usa una imagen alternativa si falta la URL
+                  playlist.videos.length > 0 && playlist.videos[0].videoThumbnails
+                    ? playlist.videos[0].videoThumbnails[0].url
+                    : playlist.playlistThumbnail || "fallback-image.png"
                 }
                 alt={playlist.title || "Imagen no disponible"}
                 className="playlist-thumbnail"
-                onError={(e) => (e.target.src = "fallback-image.png")} // Si hay error al cargar, usa una imagen de respaldo
+                onError={(e) => (e.target.src = "fallback-image.png")}
               />
-              <span>{playlist.title}</span>
+              <span className="playlist-title">📂 {playlist.title}</span>
             </Link>
           </li>
         ))}
