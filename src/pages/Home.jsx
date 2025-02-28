@@ -6,7 +6,6 @@ import Card from "../components/Card";
 import CardContent from "../components/CardContent";
 import Button from "../components/Button";
 import FloatingButton from "../components/FloatingButton";
-import ComentsVideo from "./ComentsVideo";
 import AuthLogin from "./AuthLogin";
 
 export default function Home() {

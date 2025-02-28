@@ -32,6 +32,8 @@ export default function VideoDetails() {
     fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?limit=40`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("Comentarios cargados:", data.comments);
+        console.log("Valor inicial de continued:", data.continued); 
         setComments(data.comments || []);
         setContinued(data.continued || null);
       })
@@ -39,11 +41,18 @@ export default function VideoDetails() {
   }, [videoId]);
 
   const loadMoreComments = () => {
-    if (!continued) return;
-
+    if (!continued) {
+      console.log("No hay continued, no se puede cargar más comentarios.");
+      return;
+    }
+  
+    console.log(`Cargando más comentarios con continued: ${continued}`);
+  
     fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?continued=${continued}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("Más comentarios cargados:", data.comments);
+        console.log("Nuevo valor de continued:", data.continued); // <-- LOG IMPORTANTE
         setComments((prevComments) => [...prevComments, ...(data.comments || [])]);
         setContinued(data.continued || null);
       })
@@ -95,14 +104,14 @@ export default function VideoDetails() {
             <ul className="comments-list">
               {comments.map((comment, index) => (
                 <li key={index} className="comment-item" onClick={() => navigate(`/user/${comment.authorId}`)}>
-                  <p><strong>{comment.author}:</strong> {comment.content}</p>
+                  <p><a href={`https://www.youtube.com${comment.authorUrl}`}><strong>{comment.author}:</strong></a> {comment.content}</p>
                 </li>
               ))}
             </ul>
           ) : (
             <p>No hay comentarios disponibles.</p>
           )}
-          {continued !== null && (
+          {true && ( 
             <Button onClick={loadMoreComments} className="load-more-comments">
               Cargar más comentarios
             </Button>
