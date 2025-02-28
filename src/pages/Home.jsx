@@ -12,11 +12,8 @@ import AuthLogin from "./AuthLogin";
 export default function Home() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState(false);
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const commentsPerPage = 20;
+
 
   useEffect(() => {
     fetch("http://127.0.0.1:3000/api/v1/trending")
@@ -24,26 +21,6 @@ export default function Home() {
       .then((data) => setVideos(data || []))
       .catch((error) => console.error("Error cargando los videos:", error));
   }, []);
-
-  const fetchComments = (videoId) => {
-    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Comentarios recibidos:", data);
-        setComments(data.comments || []);
-        setSelectedVideo(videoId);
-        setShowComments(true);
-        setCurrentPage(1);
-      })
-      .catch((error) => console.error("Error cargando comentarios:", error));
-  };
-
-  const closeModal = () => {
-    setShowComments(false);
-    setSelectedVideo(null);
-    setComments([]);
-    setCurrentPage(1);
-  };
 
   const handleVideoClick = (videoId) => {
     navigate(`/video/${videoId}`);
@@ -75,14 +52,6 @@ export default function Home() {
                   <Button className="card-button" onClick={() => handleVideoClick(video.videoId)}>
                     Ver Video
                   </Button>
-                  <Button className="card-button" onClick={() => fetchComments(video.videoId)}>
-                    Ver Comentarios
-                  </Button>
-                  {video.isLive && (
-                    <Button className="card-button live-button" onClick={() => setSelectedVideo(video.videoId)}>
-                      🔴 Ver en Directo
-                    </Button>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -93,14 +62,6 @@ export default function Home() {
       </div>
 
       <FloatingButton />
-      <ComentsVideo
-        showComments={showComments}
-        comments={comments}
-        currentPage={currentPage}
-        commentsPerPage={commentsPerPage}
-        setCurrentPage={setCurrentPage}
-        closeModal={closeModal}
-      />
     </div>
   );
 }

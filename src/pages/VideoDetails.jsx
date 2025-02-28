@@ -11,6 +11,8 @@ export default function VideoDetails() {
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [continued, setContinued] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -25,7 +27,28 @@ export default function VideoDetails() {
       })
       .catch(() => setError("Hubo un problema al cargar el video."))
       .finally(() => setLoading(false));
+
+    // Cargar primeros 40 comentarios del video
+    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?limit=40`)
+      .then((response) => response.json())
+      .then((data) => {
+        setComments(data.comments || []);
+        setContinued(data.continued || null);
+      })
+      .catch(() => setError("Hubo un problema al cargar los comentarios."));
   }, [videoId]);
+
+  const loadMoreComments = () => {
+    if (!continued) return;
+
+    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?continued=${continued}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setComments((prevComments) => [...prevComments, ...(data.comments || [])]);
+        setContinued(data.continued || null);
+      })
+      .catch(() => setError("Hubo un problema al cargar más comentarios."));
+  };
 
   if (loading) return <p className="loading-message">Loading...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -33,44 +56,60 @@ export default function VideoDetails() {
 
   return (
     <div className="video-page-container">
-      {/* Contenedor del video principal */}
-      <div className="video-details-container">
-        <div className="video-container">
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={video.title}
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
-        </div>
-
-        {/* Banner del Autor */}
-        <div className="author-banner" onClick={() => navigate(`/channels/${video.authorId}`)}>
-          <img
-            src={video.authorThumbnails?.[0]?.url || "default-avatar.png"}
-            alt={video.author}
-            className="author-avatar"
-          />
-          <div>
-            <h3>{video.author}</h3>
-            <p>{video.subCountText || "N/A"} subscribers</p>
+      <div className="video-content">
+        <div className="video-details-container">
+          <div className="video-container">
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}`}
+              title={video.title}
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
           </div>
+
+          <div className="author-banner" onClick={() => navigate(`/channels/${video.authorId}`)}>
+            <img
+              src={video.authorThumbnails?.[0]?.url || "default-avatar.png"}
+              alt={video.author}
+              className="author-avatar"
+            />
+            <div>
+              <h3>{video.author}</h3>
+              <p>{video.subCountText || "N/A"} subscribers</p>
+            </div>
+          </div>
+
+          <h2 className="video-title">{video.title}</h2>
+          <p className="video-description"><strong>Description:</strong> {video.description}</p>
+          <p className="video-meta"><strong>Published:</strong> {video.publishedText}</p>
+          <p className="video-meta"><strong>Duration:</strong> {video.lengthSeconds} seconds</p>
+          <p className="video-meta"><strong>Views:</strong> {video.viewCount?.toLocaleString() || "0"} vistas</p>
+          <p className="video-meta"><strong>Likes:</strong> {video.likeCount?.toLocaleString() || "0"}</p>
+
+          <Button onClick={() => window.history.back()}>Volver</Button>
         </div>
 
-        {/* Información del video */}
-        <h2 className="video-title">{video.title}</h2>
-        <p className="video-description"><strong>Description:</strong> {video.description}</p>
-        <p className="video-meta"><strong>Published:</strong> {video.publishedText}</p>
-        <p className="video-meta"><strong>Duration:</strong> {video.lengthSeconds} seconds</p>
-        <p className="video-meta"><strong>Views:</strong> {video.viewCount.toLocaleString()} vistas</p>
-        <p className="video-meta"><strong>Likes:</strong> {video.likeCount.toLocaleString()}</p>
-
-        <Button onClick={() => window.history.back()}>
-          Volver
-        </Button>
+        <div className="comments-section">
+          <h3>Comentarios</h3>
+          {comments.length > 0 ? (
+            <ul className="comments-list">
+              {comments.map((comment, index) => (
+                <li key={index} className="comment-item" onClick={() => navigate(`/user/${comment.authorId}`)}>
+                  <p><strong>{comment.author}:</strong> {comment.content}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No hay comentarios disponibles.</p>
+          )}
+          {continued !== null && (
+            <Button onClick={loadMoreComments} className="load-more-comments">
+              Cargar más comentarios
+            </Button>
+          )}
+        </div>
       </div>
 
-      {/* Sección de videos recomendados */}
       <div className="recommended-videos-container">
         <h3 className="recommended-title">Recommended Videos</h3>
         {recommendedVideos.length > 0 ? (
@@ -89,7 +128,7 @@ export default function VideoDetails() {
                 <div className="video-info">
                   <p className="title">{vid.title}</p>
                   <p className="author">{vid.author}</p>
-                  <p className="views">{vid.viewCount.toLocaleString()} views</p>
+                  <p className="views">{vid.viewCount?.toLocaleString() || "0"} views</p>
                 </div>
               </li>
             ))}
