@@ -18,7 +18,6 @@ export default function VideoDetails() {
     setLoading(true);
     setError(null);
 
-    // Cargar detalles del video y videos recomendados
     fetch(`http://127.0.0.1:3000/api/v1/videos/${videoId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -28,14 +27,13 @@ export default function VideoDetails() {
       .catch(() => setError("Hubo un problema al cargar el video."))
       .finally(() => setLoading(false));
 
-    // Cargar primeros 40 comentarios del video
     fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?limit=40`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Comentarios cargados:", data.comments);
-        console.log("Valor inicial de continued:", data.continued); 
+        console.log("Valor inicial de continued:", data.continuation);
         setComments(data.comments || []);
-        setContinued(data.continued || null);
+        setContinued(data.continuation ?? null); 
       })
       .catch(() => setError("Hubo un problema al cargar los comentarios."));
   }, [videoId]);
@@ -45,16 +43,17 @@ export default function VideoDetails() {
       console.log("No hay continued, no se puede cargar más comentarios.");
       return;
     }
-  
+
     console.log(`Cargando más comentarios con continued: ${continued}`);
-  
-    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?continued=${continued}`)
+
+    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?continued=${encodeURIComponent(continued)}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Más comentarios cargados:", data.comments);
-        console.log("Nuevo valor de continued:", data.continued); // <-- LOG IMPORTANTE
+        console.log("Nuevo valor de continued:", data.continuation);
+
         setComments((prevComments) => [...prevComments, ...(data.comments || [])]);
-        setContinued(data.continued || null);
+        setContinued(data.continuation ?? null);
       })
       .catch(() => setError("Hubo un problema al cargar más comentarios."));
   };
@@ -103,7 +102,7 @@ export default function VideoDetails() {
           {comments.length > 0 ? (
             <ul className="comments-list">
               {comments.map((comment, index) => (
-                <li key={index} className="comment-item" onClick={() => navigate(`/user/${comment.authorId}`)}>
+                <li key={index} className="comment-item">
                   <p><a href={`https://www.youtube.com${comment.authorUrl}`}><strong>{comment.author}:</strong></a> {comment.content}</p>
                 </li>
               ))}
@@ -111,7 +110,7 @@ export default function VideoDetails() {
           ) : (
             <p>No hay comentarios disponibles.</p>
           )}
-          {true && ( 
+          {continued && (
             <Button onClick={loadMoreComments} className="load-more-comments">
               Cargar más comentarios
             </Button>
