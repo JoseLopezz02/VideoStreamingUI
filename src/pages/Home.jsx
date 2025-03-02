@@ -7,6 +7,7 @@ import CardContent from "../components/CardContent";
 import Button from "../components/Button";
 import FloatingButton from "../components/FloatingButton";
 import RequestToken from "./RequestToken";
+import AuthUserGetPlaylists from "./AuthUserGetPlaylists";
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
@@ -29,6 +30,7 @@ export default function Home() {
       <SearchBar searchType="video" />
 
       <RequestToken />
+      <AuthUserGetPlaylists />
 
       <div className="card-container">
         {videos.length > 0 ? (
