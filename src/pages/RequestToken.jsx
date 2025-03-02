@@ -30,7 +30,8 @@ export default function RequestToken() {
     };
 
     const handleAuthorize = () => {
-        window.location.href = `${INVIDIOUS_API_URL}/authorize_token?scopes=:*&callback_url=${encodeURIComponent(FRONTEND_URL)}`;
+        const expire = 86400;
+        window.location.href = `${INVIDIOUS_API_URL}/authorize_token?scopes=:*&callback_url=${encodeURIComponent(FRONTEND_URL)}&expire=${expire}`;
     };
 
     const handleLogout = () => {
