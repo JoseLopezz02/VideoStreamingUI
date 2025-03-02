@@ -39,23 +39,26 @@ export default function VideoDetails() {
   }, [videoId]);
 
   const loadMoreComments = () => {
-  if (!continued) return;
-
-  fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?continuation=${continued}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Nuevos comentarios cargados:", data.comments);
-      console.log("Nuevo valor de continuation:", data.continued);
-
-      setComments((prevComments) => {
-        const uniqueComments = [...prevComments, ...(data.comments || [])];
-        return Array.from(new Map(uniqueComments.map(c => [c.commentId, c])).values());
-      });
-
-      setContinued(data.continued ?? null);
-    })
-    .catch(() => setError("Hubo un problema al cargar más comentarios."));
-};
+    if (!continued) return;
+  
+    fetch(`http://127.0.0.1:3000/api/v1/comments/${videoId}?continuation=${continued}&limit=40`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Nuevos comentarios cargados:", data.comments);
+        console.log("Nuevo valor de continuation:", data.continuation);
+  
+        if (data.comments) {
+          setComments((prevComments) => {
+            const uniqueComments = new Map([...prevComments, ...data.comments].map(c => [c.commentId, c]));
+            return Array.from(uniqueComments.values());
+          });
+        }
+  
+        setContinued(data.continuation ?? null);
+      })
+      .catch(() => setError("Hubo un problema al cargar más comentarios."));
+  };
+  
 
   if (loading) return <p className="loading-message">Loading...</p>;
   if (error) return <p className="error-message">{error}</p>;
