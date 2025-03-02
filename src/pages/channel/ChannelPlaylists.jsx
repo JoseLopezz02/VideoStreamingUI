@@ -31,8 +31,8 @@ export default function ChannelPlaylists() {
       });
   }, [channelId]);
 
-  if (loading) return <p>Cargando playlists...</p>;
-  if (!playlists.length) return <p>No se encontraron playlists.</p>;
+  if (loading) return <p>Loading playlists...</p>;
+  if (!playlists.length) return <p>No playlist found</p>;
 
   return (
     <div className="playlist-list-container">
