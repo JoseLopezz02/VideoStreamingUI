@@ -32,12 +32,12 @@ export default function ChannelPodcasts() {
       });
   }, [channelId]);
 
-  if (loading) return <p>Cargando podcasts...</p>;
-  if (!podcasts.length) return <p>No se encontraron podcasts.</p>;
+  if (loading) return <p>Loading podcasts...</p>;
+  if (!podcasts.length) return <p>No podcast found</p>;
 
   return (
     <div className="playlist-list-container">
-      <h1>Podcasts del Canal</h1>
+      <h1>Channel Podcast</h1>
       <ul className="playlist-list">
         {podcasts.map((podcast) => (
           <li key={podcast.id || podcast.playlistId} className="playlist-item">

@@ -7,6 +7,7 @@ import ChannelContent from "./pages/channel/ChannelContent";
 import ChannelVideos from "./pages/channel/ChannelVideos";
 import ChannelPlaylists from "./pages/channel/ChannelPlaylists";
 import ChannelPodcasts from "./pages/channel/ChannelPodcasts";
+import PodcastPage from "./pages/PodcastPage";
 import PlaylistPage from "./pages/PlaylistPage";
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/channel/:channelId/videos" element={<ChannelVideos />} />
           <Route path="/channel/:channelId/podcasts" element={<ChannelPodcasts />} />
           <Route path="/channel/:channelId/playlists" element={<ChannelPlaylists />} />
+          <Route path="/podcast/:playlistId" element={<PodcastPage />} />
           <Route path="/playlist/:playlistId" element={<PlaylistPage />} /> 
         </Routes>
       </div>
