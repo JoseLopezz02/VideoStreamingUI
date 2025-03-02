@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import "../../styles/channelPlaylists.css"; // Usa los mismos estilos de playlists
 
 export default function ChannelPodcasts() {
   const { channelId } = useParams();
@@ -18,9 +19,9 @@ export default function ChannelPodcasts() {
         console.log("API Response:", data);
 
         if (data && Array.isArray(data.playlists)) {
-          setPodcasts(data.playlists); 
+          setPodcasts(data.playlists);
         } else {
-          setPodcasts([]); 
+          setPodcasts([]);
         }
         setLoading(false);
       })
@@ -32,29 +33,29 @@ export default function ChannelPodcasts() {
   }, [channelId]);
 
   if (loading) return <p>Cargando podcasts...</p>;
-  if (!Array.isArray(podcasts) || podcasts.length === 0) return <p>No se encontraron podcasts.</p>;
+  if (!podcasts.length) return <p>No se encontraron podcasts.</p>;
 
   return (
-    <div>
+    <div className="playlist-list-container">
       <h1>Podcasts del Canal</h1>
-      <ul>
-        {podcasts.map((podcast, index) => {
-          // Obtener la primera miniatura del primer video del podcast
-          const firstThumbnail =
-            podcast.videos?.[0]?.videoThumbnails?.[0]?.url || "fallback-image.png";
-
-          return (
-            <li key={podcast.playlistId || index}>
+      <ul className="playlist-list">
+        {podcasts.map((podcast) => (
+          <li key={podcast.id || podcast.playlistId} className="playlist-item">
+            <Link to={`/podcast/${podcast.playlistId}`} className="playlist-link">
               <img
-                src={firstThumbnail.startsWith("/") ? `http://127.0.0.1:3000${firstThumbnail}` : firstThumbnail}
-                alt={podcast.title || "Podcast sin título"}
-                style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "8px" }}
+                src={
+                  podcast.videos.length > 0 && podcast.videos[0].videoThumbnails
+                    ? podcast.videos[0].videoThumbnails[0].url
+                    : podcast.playlistThumbnail || "fallback-image.png"
+                }
+                alt={podcast.title || "Imagen no disponible"}
+                className="playlist-thumbnail"
                 onError={(e) => (e.target.src = "fallback-image.png")}
               />
-              <p>{podcast.title || "Sin título"}</p>
-            </li>
-          );
-        })}
+              <span className="playlist-title">🎙️ {podcast.title}</span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
