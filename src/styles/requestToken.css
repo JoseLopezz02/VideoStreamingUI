@@ -1,0 +1,79 @@
+/* General Styles */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+    background-color: #121212; 
+    color: white;
+}
+
+/* Card Box */
+.auth-box {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    width: 350px;
+}
+
+.auth-box h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.login {
+    background-color: #007bff;
+    color: white;
+}
+
+.login:hover {
+    background-color: #0056b3;
+}
+
+.authorize {
+    background-color: #28a745;
+    color: white;
+}
+
+.authorize:hover {
+    background-color: #1d7c31;
+}
+
+.logout {
+    background-color: #dc3545;
+    color: white;
+}
+
+.logout:hover {
+    background-color: #a71d2a;
+}
+
+/* Messages */
+.success-message {
+    background: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: #ff4c4c;
+    margin-top: 10px;
+}
