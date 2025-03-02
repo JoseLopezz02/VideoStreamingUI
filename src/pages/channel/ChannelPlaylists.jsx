@@ -32,11 +32,11 @@ export default function ChannelPlaylists() {
   }, [channelId]);
 
   if (loading) return <p>Loading playlists...</p>;
-  if (!playlists.length) return <p>No playlist found</p>;
+  if (!playlists.length) return <p>No playlists found.</p>;
 
   return (
     <div className="playlist-list-container">
-      <h1>Playlists del Canal</h1>
+      <h1>Channel Playlist</h1>
       <ul className="playlist-list">
         {playlists.map((playlist) => (
           <li key={playlist.id || playlist.playlistId} className="playlist-item">
