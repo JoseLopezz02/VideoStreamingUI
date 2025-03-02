@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import SearchBar from "./SearchBar";
 import Card from "../components/Card";
 import CardContent from "../components/CardContent";
 import Button from "../components/Button";
 import FloatingButton from "../components/FloatingButton";
-import AuthLogin from "./AuthLogin";
+import RequestToken from "./RequestToken";
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     fetch("http://127.0.0.1:3000/api/v1/trending")
@@ -29,9 +27,9 @@ export default function Home() {
     <div className="home-container">
       <h2 className="trending-title">TRENDING VIDEOS</h2>
       <SearchBar searchType="video" />
-      <AuthLogin />
 
-      {/* Sección de Trending Videos directamente en Home */}
+      <RequestToken />
+
       <div className="card-container">
         {videos.length > 0 ? (
           videos.map((video) => (
