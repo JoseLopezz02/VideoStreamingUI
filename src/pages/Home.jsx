@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import FloatingButton from "../components/FloatingButton";
 import RequestToken from "./RequestToken";
 import AuthUserGetPlaylists from "./AuthUserGetPlaylists";
+import AuthTokenGetSubscriptions from "./AuthTokenGetSubscriptions";
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
@@ -31,6 +32,7 @@ export default function Home() {
 
       <RequestToken />
       <AuthUserGetPlaylists />
+      <AuthTokenGetSubscriptions />
 
       <div className="card-container">
         {videos.length > 0 ? (
