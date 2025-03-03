@@ -40,7 +40,6 @@ export default function AuthTokenGetSubscriptions() {
           subscriptions.map((sub) => (
             <li key={sub.channelId} className="playlist-item">
               {sub.channelName}
-              <UnsubscribeButton channelId={sub.channelId} onUpdate={fetchSubscriptions} />
             </li>
           ))
         ) : (
