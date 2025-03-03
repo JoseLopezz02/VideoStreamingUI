@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "../components/Button";
 import AuthUserEditPlaylists from "./AuthUserEditPlaylists";
 
 export default function AuthUserGetPlaylists() {
@@ -10,12 +9,14 @@ export default function AuthUserGetPlaylists() {
 
     useEffect(() => {
         const fetchPlaylists = async () => {
-            const token = localStorage.getItem("authToken");
+            let token = localStorage.getItem("authToken");
             if (!token) {
                 setError("Authentication token not found.");
                 setLoading(false);
                 return;
             }
+            
+            token = decodeURIComponent(token);
 
             try {
                 const response = await fetch("http://127.0.0.1:3000/api/v1/auth/playlists", { 
@@ -32,14 +33,14 @@ export default function AuthUserGetPlaylists() {
                     throw new Error(`HTTP Error! Status: ${response.status}`);
                 }
 
-                const text = await response.text(); 
+                const text = await response.text();
                 console.log("Raw JSON response:", text);
 
                 if (!text) {
                     throw new Error("Empty response from server.");
                 }
 
-                const data = JSON.parse(text); 
+                const data = JSON.parse(text);
                 setPlaylists(data);
             } catch (err) {
                 setError(err.message);
