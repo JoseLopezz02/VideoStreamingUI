@@ -9,8 +9,6 @@ import FloatingButton from "../components/FloatingButton";
 import RequestToken from "./RequestToken";
 import AuthUserGetPlaylists from "./AuthUserGetPlaylists";
 import AuthTokenGetSubscriptions from "./AuthTokenGetSubscriptions";
-import AuthTokenDeleteSubscriptions from "./AuthTokenDeleteSubscriptions";
-import AuthTokenAddSubscriptions from "./AuthTokenAddSubscriptions";
 
 export default function Home() {
   const [videos, setVideos] = useState([]);
