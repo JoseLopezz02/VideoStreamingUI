@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export default function AuthUserEditPlaylists({ playlist, onClose }) {
     const [title, setTitle] = useState(playlist.title);
     const [privacy, setPrivacy] = useState(playlist.privacy);
+    const [description, setDescription] = useState(playlist.description || "") //I set as default description an empty String
     const [message, setMessage] = useState("");
     const [error, setError] = useState(null);
 
@@ -23,7 +24,7 @@ export default function AuthUserEditPlaylists({ playlist, onClose }) {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ title, privacy }),
+                body: JSON.stringify({ title, privacy, description }),
             });
 
             if (!response.ok) {
@@ -54,6 +55,13 @@ export default function AuthUserEditPlaylists({ playlist, onClose }) {
                     <option value="unlisted">Unlisted</option>
                     <option value="private">Private</option>
                 </select>
+            </div>
+            <div>
+                <label>Description:</label> 
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
             </div>
             <button onClick={handleUpdate}>Update Playlist</button>
             {message && <p className="success">{message}</p>}
