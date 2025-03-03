@@ -18,7 +18,7 @@ export default function AuthUserGetPlaylists() {
             }
 
             try {
-                const response = await fetch("http://127.0.0.1:3000/api/v1/playlists", {
+                const response = await fetch("http://127.0.0.1:3000/api/v1/auth/playlists", { 
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -26,11 +26,20 @@ export default function AuthUserGetPlaylists() {
                     },
                 });
 
+                console.log("Raw response:", response);
+
                 if (!response.ok) {
                     throw new Error(`HTTP Error! Status: ${response.status}`);
                 }
 
-                const data = await response.json();
+                const text = await response.text(); 
+                console.log("Raw JSON response:", text);
+
+                if (!text) {
+                    throw new Error("Empty response from server.");
+                }
+
+                const data = JSON.parse(text); 
                 setPlaylists(data);
             } catch (err) {
                 setError(err.message);
