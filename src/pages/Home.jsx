@@ -35,8 +35,6 @@ export default function Home() {
       <RequestToken />
       <AuthUserGetPlaylists />
       <AuthTokenGetSubscriptions />
-      <AuthTokenAddSubscriptions />
-      <AuthTokenDeleteSubscriptions />
 
       <div className="card-container">
         {videos.length > 0 ? (
