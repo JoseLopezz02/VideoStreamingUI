@@ -10,7 +10,7 @@ export default function AuthUserEditPlaylists({ playlist, onClose }) {
         setMessage("");
         setError(null);
 
-        const token = localStorage.getItem("authToken");
+        let token = localStorage.getItem("authToken");
         if (!token) {
             setError("Authentication token not found.");
             return;
