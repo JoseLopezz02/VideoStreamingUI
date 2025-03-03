@@ -33,12 +33,12 @@ export default function AuthTokenGetSubscriptions() {
   }, [navigate]);
 
   return (
-    <div>
+    <div className="playlist-list-container">
       <h2>Mis suscripciones</h2>
-      <ul>
+      <ul className="playlist-list">
         {subscriptions.length > 0 ? (
           subscriptions.map((sub) => (
-            <li key={sub.channelId}>
+            <li key={sub.channelId} className="playlist-item">
               {sub.channelName}
               <UnsubscribeButton channelId={sub.channelId} onUpdate={fetchSubscriptions} />
             </li>
