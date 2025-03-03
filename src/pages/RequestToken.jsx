@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/requestToken.css"; 
 
 const FRONTEND_URL = "http://localhost:5173";
@@ -11,24 +11,14 @@ export default function RequestToken() {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
-    
+
         if (token) {
             const decodedToken = decodeURIComponent(token);
+
+            // I store the raw token without trying to parse it as JSON
+            setAuthToken(decodedToken);
+            localStorage.setItem("authToken", decodedToken);
             
-            try {
-                const parsedToken = JSON.parse(decodedToken); // Parse the JSON string
-                const sessionToken = parsedToken.session; // Extract only the session value
-    
-                if (sessionToken) {
-                    setAuthToken(sessionToken);
-                    localStorage.setItem("authToken", sessionToken); // Store only session token
-                } else {
-                    setError("Invalid token format.");
-                }
-            } catch (error) {
-                setError("Failed to parse token.");
-            }
-    
             window.history.replaceState({}, document.title, FRONTEND_URL);
         } else {
             const storedToken = localStorage.getItem("authToken");
@@ -37,7 +27,6 @@ export default function RequestToken() {
             }
         }
     }, []);
-    
 
     const handleLogin = () => {
         window.location.href = `${INVIDIOUS_API_URL}/login`;
