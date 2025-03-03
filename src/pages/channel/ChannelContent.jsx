@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import "../../styles/channelResult.css";
 import { useNavigate } from "react-router-dom";
 import FloatingButton from "../../components/FloatingButton";
-import AuthTokenAddSubscriptions from "../AuthTokenAddSubscriptions"; 
+import AuthTokenManageSubscriptions from "../AuthTokenManageSubscriptions"; 
 
 export default function ChannelContent() {
   const { channelId } = useParams();
@@ -47,11 +47,8 @@ export default function ChannelContent() {
         <Button onClick={() => navigate(`/channel/${channelId}/videos`)}>📺 Videos del canal</Button>
         <Button onClick={() => navigate(`/channel/${channelId}/podcasts`)}>🎙️ Podcast del canal</Button>
         <Button onClick={() => navigate(`/channel/${channelId}/playlists`)}>📂 Playlist del canal</Button>
-        {/* Botón de Suscribirse */}
-        <AuthTokenAddSubscriptions
-          channelId={channelId} // Usa el ID del canal
-          onUpdate={() => console.log("Suscripción actualizada")} // Puedes agregar lógica adicional aquí
-        />
+
+        <AuthTokenManageSubscriptions channelId={channelId} />
       </div>
 
       {channelData.relatedChannels?.length > 0 && (
