@@ -38,7 +38,10 @@ export default function AuthTokenGetSubscriptions() {
       <ul>
         {subscriptions.length > 0 ? (
           subscriptions.map((sub) => (
-            <li key={sub.channelId}>{sub.channelName}</li>
+            <li key={sub.channelId}>
+              {sub.channelName}
+              <UnsubscribeButton channelId={sub.channelId} onUpdate={fetchSubscriptions} />
+            </li>
           ))
         ) : (
           <p>No tienes suscripciones.</p>
