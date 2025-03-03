@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import Button from "../components/Button";
+import AuthUserEditPlaylists from "./AuthUserEditPlaylists";
 
 export default function AuthUserGetPlaylists() {
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [editingPlaylist, setEditingPlaylist] = useState(null);
 
     useEffect(() => {
         const fetchPlaylists = async () => {
-            const token = localStorage.getItem("authToken"); 
+            const token = localStorage.getItem("authToken");
             if (!token) {
                 setError("Authentication token not found.");
                 setLoading(false);
@@ -53,12 +56,25 @@ export default function AuthUserGetPlaylists() {
                         <li key={playlist.playlistId} className="playlist-item">
                             <div>
                                 <strong>{playlist.title}</strong> ({playlist.privacy})
+                                <button onClick={() => setEditingPlaylist(playlist)}>
+                                    ✏️ Edit
+                                </button>
                             </div>
                         </li>
                     ))}
                 </ul>
             ) : (
                 <p>No playlists found...</p>
+            )}
+
+            {editingPlaylist && (
+                <div className="edit-modal">
+                    <h3>Edit Playlist</h3>
+                    <AuthUserEditPlaylists
+                        playlist={editingPlaylist}
+                        onClose={() => setEditingPlaylist(null)}
+                    />
+                </div>
             )}
         </div>
     );
