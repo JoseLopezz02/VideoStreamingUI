@@ -6,7 +6,7 @@ export default function AuthTokenGetSubscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
+    let token = localStorage.getItem("authToken");
 
     if (!token) {
       navigate("/");
